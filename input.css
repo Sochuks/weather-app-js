@@ -17,4 +17,14 @@ body{
     transition: 500ms;
     opacity: 1;
 }
+
+.panel ul {
+    padding:0 0 1em 0;
+    border-bottom: 1px #ccc solid;
+}
+
+.panel ul li{
+    color:#ccc;
+    margin: 2.5em 0;
+}
  
