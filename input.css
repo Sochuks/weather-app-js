@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    margin: 0;
+    font-family: 'Rubik', sans-serif;
+    background: #111;
+}
+
+.weather-app{
+    height: 100vh;
+    background-image: url(../img/day/clouds.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    transition: 500ms;
+    opacity: 1;
+}
+ 

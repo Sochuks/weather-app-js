@@ -15,7 +15,10 @@ module.exports = {
       thirdCol: 'hsla(227, 100%, 80%, 1)',
       fourCol: 'hsla(218, 100%, 87%, 1)',
       fiveCol: 'hsla(184, 100%, 94%, 1)',
-    }
+    },
+    backgroundImage: {
+      'hero1': "url('../img/day/clouds.jpg')",
+    },
   },
   },
   plugins: [],
