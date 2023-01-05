@@ -27,4 +27,25 @@ body{
     color:#ccc;
     margin: 2.5em 0;
 }
- 
+
+.city{
+    display: block;
+    cursor: pointer;
+}
+
+.city:hover{
+    color:#fff;
+}
+
+.details li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media screen and (max-height: 300px) {
+    .weather-app{
+        height: 40rem;
+    }
+    
+}

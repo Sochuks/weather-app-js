@@ -558,9 +558,12 @@ video {
   margin-bottom: 1rem;
 }
 
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .mb-1 {
@@ -583,16 +586,8 @@ video {
   display: flex;
 }
 
-.h-full {
-  height: 100%;
-}
-
 .w-full {
   width: 100%;
-}
-
-.w-2\/5 {
-  width: 40%;
 }
 
 .w-4\/5 {
@@ -613,10 +608,6 @@ video {
 
 .justify-start {
   justify-content: flex-start;
-}
-
-.justify-between {
-  justify-content: space-between;
 }
 
 .overflow-y-scroll {
@@ -669,9 +660,8 @@ video {
   padding-right: 1rem;
 }
 
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+.pl-5 {
+  padding-left: 1.25rem;
 }
 
 .text-8xl {
@@ -738,6 +728,27 @@ body{
   margin: 2.5em 0;
 }
 
+.city{
+  display: block;
+  cursor: pointer;
+}
+
+.city:hover{
+  color:#fff;
+}
+
+.details li{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-height: 300px) {
+  .weather-app{
+    height: 40rem;
+  }
+}
+
 .before\:absolute::before {
   content: var(--tw-content);
   position: absolute;
@@ -786,4 +797,21 @@ body{
 .focus\:outline-0:focus {
   outline-width: 0px;
 }
- 
+
+@media (min-width: 768px) {
+  .md\:absolute {
+    position: absolute;
+  }
+
+  .md\:h-full {
+    height: 100%;
+  }
+
+  .md\:w-2\/5 {
+    width: 40%;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
+  }
+}
