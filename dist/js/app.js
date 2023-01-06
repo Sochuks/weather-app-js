@@ -86,6 +86,19 @@ function currentDay(timezoneIn, dtIn){
     return cityTime[0] 
   }
 
+    //function check day or night
+function DayNight(timezoneIn, dtIn){
+    let dateTime = new Date(dtIn*1000 + (timezoneIn*1000));
+    let check = dateTime.getHours();
+    let isDay = check > 0 && check < 18
+
+    if (isDay = true) {
+        return timeOfTheDay = "day"
+    }else{
+        return timeOfTheDay ="night"
+    }
+}
+
 // api key
 apik = "3045dd712ffe6e702e3245525ac7fa38"
 
@@ -118,6 +131,9 @@ function fetchWeatherData(){
         var cityTimeNew = getTime(data.timezone)
         var cityNameNew = data.name
         var iconNew = data.weather[0].icon
+//        var cloudNew = data.clouds[1]
+        var humidityNew = data.main.humidity
+        var windNew = data.wind.speed
 
         //get the corresponding icon url for weather and extract part of it
         
@@ -130,8 +146,91 @@ function fetchWeatherData(){
         cityTime.innerHTML = cityTimeNew;
         cityName.innerHTML = cityNameNew;
         icon.innerHTML = `<img src="dist/img/icon/${iconNew}.png">`
+        humidity.innerHTML = humidityNew + "%";
+        wind.innerHTML = windNew + "Km'/'hr"
+    //    cloud.innerHTML = cloudNew + "%S"
 
+        // set default time of day
+        var timeOfTheDay = DayNight(data.timezone, data.dt)
         
-    });
+        // get unique id for each weather condition
+        const code = data['weather']['0']['id'];
 
+
+        if(code == 800){
+
+            // set background to clear
+            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/clear.jpg)'
+        }
+        else if(
+            code == 801 ||
+            code == 802 ||
+            code == 803 ||
+            code == 804 ){
+            
+            // set background to clear
+            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/cloud.jpg)'
+        }
+        else if(
+            code == 701 ||
+            code == 711 ||
+            code == 721 ||
+            code == 731 ||
+            code == 741 ||
+            code == 751 ||
+            code == 761 ||
+            code == 771 ||
+            code == 781 ){
+            
+            // set background to clear
+            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/fog.jpg)'
+        }
+        else if(
+            code == 600 ||
+            code == 601 ||
+            code == 602 ||
+            code == 611 ||
+            code == 612 ||
+            code == 613 ||
+            code == 614 ||
+            code == 615 ||
+            code == 616 ||
+            code == 620 ||
+            code == 621 ||
+            code == 622 ){
+            
+            // set background to clear
+            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/snow.jpg)'
+        }
+        else if(
+            code == 500 ||
+            code == 501 ||
+            code == 502 ||
+            code == 503 ||
+            code == 504 ||
+            code == 511 ||
+            code == 520 ||
+            code == 521 ||
+            code == 522 ||
+            code == 531 ){
+            
+            // set background to clear
+            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/rain.jpg)'
+        }
+        else if(
+            code == 200 ||
+            code == 201 ||
+            code == 202 ||
+            code == 210 ||
+            code == 211 ||
+            code == 212 ||
+            code == 221 ||
+            code == 230 ||
+            code == 231 ||
+            code == 232 ){
+            
+            // set background to clear
+            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/thunder.jpg)'
+        }
+    });
 }
