@@ -51,7 +51,7 @@ form.addEventListener('submit', (e) => {
 });
 
 // Function that returns a day of the week from a date
-function dayOfTheWeek(day, month, year) {
+/*function dayOfTheWeek(day, month, year) {
     // set the days of the week as array
     const weekday = [
         "Sunday",
@@ -63,7 +63,28 @@ function dayOfTheWeek(day, month, year) {
         "Saturday"
     ];
     return weekday[new Date('${day}/${month}/${year}').getDay()];
-};
+};*/
+
+//function that returns current time & date
+function currentDay(timezoneIn, dtIn){
+    let dateTime = new Date(dtIn*1000 + (timezoneIn*1000));
+
+    let weekday = dateTime.toLocaleString('default', {weekday: 'long'});
+    let month = dateTime.toLocaleString('default', {month: 'short'}); 
+    let date = dateTime.getDate();
+
+    return weekday+', '+month+' '+date;
+}
+
+//get city time
+    const getTime = (timezone) => {
+    const localTime = new Date().getTime()
+    const localOffset = new Date().getTimezoneOffset() * 60000
+    const currentUtcTime = localOffset + localTime
+    const cityOffset = currentUtcTime + 1000 * timezone
+    const cityTime = new Date(cityOffset).toTimeString().split(' ')
+    return cityTime[0] 
+  }
 
 // api key
 apik = "3045dd712ffe6e702e3245525ac7fa38"
@@ -82,7 +103,7 @@ function titleCase(val) {
 function fetchWeatherData(){
     /*Fetch the data and dynamically add 
     the city name with the template literals */
-    fetch('https://api.openweathermap.org/data/2.5/weather?q='+cityInput+'&appid='+apik)
+    fetch('https://api.openweathermap.org/data/2.5/weather?q='+cityInput+'&appid='+apik+'&units=metric')
     
     // get the data in json format and convert to JS object
     .then(response => response.json())
@@ -91,13 +112,26 @@ function fetchWeatherData(){
         console.log(data)
 
         //get JS objects 
-        var tempNew = converter(data.main.temp)
+        var tempNew = data.main.temp
         var conditionNew = data['weather']['0']['description']
+        var cityDateNew = currentDay(data.timezone, data.dt)
+        var cityTimeNew = getTime(data.timezone)
+        var cityNameNew = data.name
+        var iconNew = data.weather[0].icon
+
+        //get the corresponding icon url for weather and extract part of it
+        
 
 
         //add the JS objects to page
         temp.innerHTML = tempNew + "&#176;"
-        condition.innerHTML = titleCase(conditionNew)
-    })
+        condition.innerHTML = titleCase(conditionNew);
+        cityDate.innerHTML = cityDateNew;
+        cityTime.innerHTML = cityTimeNew;
+        cityName.innerHTML = cityNameNew;
+        icon.innerHTML = `<img src="dist/img/icon/${iconNew}.png">`
+
+        
+    });
 
 }
