@@ -18,7 +18,7 @@
 <body>
     
     <!--weather app-->
-    <div class="weather-app relative before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-black before:opacity-30 before:z-0">
+    <div class="weather-app relative before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-black before:opacity-50 before:z-0">
 
         <!--Container-->
         <div class="flex flex-col relative w-full mb-8 top-0 left-0 p-2 md:h-full md:absolute md:justify-between">
@@ -51,10 +51,10 @@
                 </div>
 
                 <!--Weather-->
-                <div class="weather mx-1.5">
+                <div class="weather mx-1.5 pb-4">
 
                     <!--weather-icn-->
-                    <div class="icon block">
+                    <div class="icon w-12 h-12 block">
                         <img src="dist/img/icon/unknown.png" alt="icon" width="80" height="80">
                     </div>
 
@@ -75,7 +75,7 @@
 
                 <input type="text" class="search bg-transparent border-0 border-b w-4/5 focus:outline-0" placeholder="Search Location">
 
-                <button type="submit" class="submit absolute top-0 right-0 p-4 bg-primaryCol text-white cursor-pointer text-xl transition-all hover:bg-secCol">
+                <button type="submit" class="submit-btn absolute top-0 right-0 p-4 bg-primaryCol text-white cursor-pointer text-xl transition-all hover:bg-secCol">
                     <div class="bx bx-search-alt"></div>
                 </button>
             </form>
@@ -89,21 +89,30 @@
             </ul>
 
             <!--city details-->
-            <h4 class="my-4">Weather Details</h4>
+            <h4 class="my-4 text-lg font-bold">Weather Details</h4>
             <ul class="details">
                 <!--Cloudy-->
                 <li>
-                    <span>Cloudy</span>
-                    <span class="clouds">89%</span>
+                    <div class="flex justify-center items-center">
+                    <i class="bx bxs-thermometer mr-4 text-2xl"></i>
+                    <span>Feels Like</span>
+                    </div>
+                    <span class="feels">89%</span>
                 </li>
                 <!--Humidity-->
                 <li>
-                    <span>Humidity</span>
+                    <div class="flex justify-center items-center">
+                        <i class="bx bxs-droplet mr-4 text-2xl"></i>
+                        <span>Humidity</span>
+                        </div>
                     <span class="humidity">64%</span>
                 </li>
                 <!--Wind-->
                 <li>
-                    <span>Wind</span>
+                    <div class="flex justify-center items-center">
+                        <i class="bx bx-wind mr-4 text-2xl"></i>
+                        <span>Wind</span>
+                        </div>
                     <span class="wind">8km/h</span>
                 </li>
             </ul>

@@ -1,22 +1,14 @@
-// Get all neccessary elements from DOM
-
+// Get neccessary elemnts from page
 const app = document.querySelector('.weather-app');
-const temp = document.querySelector('.temp');
-const cityName = document.querySelector('.city-name');
 const cityDate = document.querySelector('.date');
 const cityTime = document.querySelector('.time');
-const condition = document.querySelector('.condition');
-const icon = document.querySelector('.icon');
-const cloud = document.querySelector('.cloud');
-const humidity = document.querySelector('.humidity');
-const wind = document.querySelector('.wind');
 const form = document.getElementById('location-input');
 const search = document.querySelector('.search');
-const btn = document.querySelector('.submit');
+const btn = document.querySelector('.submit-btn');
 const cities = document.querySelectorAll('.city');
 
 // Default city when the page loads
-let cityInput = "London";
+let cityInput = "london";
 
 // Add click event listener to each city in the panel
 cities.forEach((city) => {
@@ -40,8 +32,8 @@ form.addEventListener('submit', (e) => {
         cityInput = search.value; 
         // Function to get and display all data from weather API
         fetchWeatherData();
-        // Remove all the text from search input
-        search.value = "";
+       // Remove all the text from search input
+       search.value = "";
         // fade out the app
         app.getElementsByClassName.opacity = "0"
     }
@@ -50,24 +42,12 @@ form.addEventListener('submit', (e) => {
         e.preventDefault();
 });
 
-// Function that returns a day of the week from a date
-/*function dayOfTheWeek(day, month, year) {
-    // set the days of the week as array
-    const weekday = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ];
-    return weekday[new Date('${day}/${month}/${year}').getDay()];
-};*/
-
 //function that returns current time & date
-function currentDay(timezoneIn, dtIn){
+function currentDate(timezoneIn, dtIn){
     let dateTime = new Date(dtIn*1000 + (timezoneIn*1000));
+    // Convert into 24-hour format
+    let hour = (dateTime.getHours() % 12) - 3;
+    let ampm = hour >= 12 ? 'pm' : 'am';
 
     let weekday = dateTime.toLocaleString('default', {weekday: 'long'});
     let month = dateTime.toLocaleString('default', {month: 'short'}); 
@@ -77,160 +57,170 @@ function currentDay(timezoneIn, dtIn){
 }
 
 //get city time
-    const getTime = (timezone) => {
+const getTime = (timezone) => {
     const localTime = new Date().getTime()
     const localOffset = new Date().getTimezoneOffset() * 60000
     const currentUtcTime = localOffset + localTime
     const cityOffset = currentUtcTime + 1000 * timezone
     const cityTime = new Date(cityOffset).toTimeString().split(' ')
-    return cityTime[0] 
+    return cityTime[0]
   }
 
-    //function check day or night
-function DayNight(timezoneIn, dtIn){
+//   get time of the day
+  function isDay(timezoneIn, dtIn){
     let dateTime = new Date(dtIn*1000 + (timezoneIn*1000));
-    let check = dateTime.getHours();
-    let isDay = check > 0 && check < 18
-
-    if (isDay = true) {
-        return timeOfTheDay = "day"
+    // Convert into 24-hour format
+    let hour = dateTime.getHours();
+    const isDayTime = hour > 6 && hour < 20;
+    if (isDayTime == false){
+        return timeOfDay = 'night'
     }else{
-        return timeOfTheDay ="night"
+        return timeOfDay = 'day'
     }
-}
-
-// api key
-apik = "3045dd712ffe6e702e3245525ac7fa38"
-
-//kelvin to celcius converter
-function converter(val){
-    return (val - 273).toFixed(2);
-}
-
-// converts word to sentence case
-function titleCase(val) {
-    return val.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
+   
   }
+
+  // api key
+apik = "3045dd712ffe6e702e3245525ac7fa38"
 
 // function that fetches and displays all data from the weather API
 function fetchWeatherData(){
-    /*Fetch the data and dynamically add 
+        /*Fetch the data and dynamically add 
     the city name with the template literals */
     fetch('https://api.openweathermap.org/data/2.5/weather?q='+cityInput+'&appid='+apik+'&units=metric')
     
-    // get the data in json format and convert to JS object
+    // get the data in json format and convert to object
     .then(response => response.json())
-    .then(data => {
-        // view data on concole
-        console.log(data)
-
-        //get JS objects 
-        var tempNew = data.main.temp
-        var conditionNew = data['weather']['0']['description']
-        var cityDateNew = currentDay(data.timezone, data.dt)
-        var cityTimeNew = getTime(data.timezone)
-        var cityNameNew = data.name
-        var iconNew = data.weather[0].icon
-//        var cloudNew = data.clouds[1]
-        var humidityNew = data.main.humidity
-        var windNew = data.wind.speed
-
-        //get the corresponding icon url for weather and extract part of it
-        
-
-
-        //add the JS objects to page
-        temp.innerHTML = tempNew + "&#176;"
-        condition.innerHTML = titleCase(conditionNew);
-        cityDate.innerHTML = cityDateNew;
-        cityTime.innerHTML = cityTimeNew;
-        cityName.innerHTML = cityNameNew;
-        icon.innerHTML = `<img src="dist/img/icon/${iconNew}.png">`
-        humidity.innerHTML = humidityNew + "%";
-        wind.innerHTML = windNew + "Km'/'hr"
-    //    cloud.innerHTML = cloudNew + "%S"
-
-        // set default time of day
-        var timeOfTheDay = DayNight(data.timezone, data.dt)
-        
-        // get unique id for each weather condition
-        const code = data['weather']['0']['id'];
-
-
-        if(code == 800){
-
-            // set background to clear
-            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/clear.jpg)'
-        }
-        else if(
-            code == 801 ||
-            code == 802 ||
-            code == 803 ||
-            code == 804 ){
-            
-            // set background to clear
-            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/cloud.jpg)'
-        }
-        else if(
-            code == 701 ||
-            code == 711 ||
-            code == 721 ||
-            code == 731 ||
-            code == 741 ||
-            code == 751 ||
-            code == 761 ||
-            code == 771 ||
-            code == 781 ){
-            
-            // set background to clear
-            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/fog.jpg)'
-        }
-        else if(
-            code == 600 ||
-            code == 601 ||
-            code == 602 ||
-            code == 611 ||
-            code == 612 ||
-            code == 613 ||
-            code == 614 ||
-            code == 615 ||
-            code == 616 ||
-            code == 620 ||
-            code == 621 ||
-            code == 622 ){
-            
-            // set background to clear
-            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/snow.jpg)'
-        }
-        else if(
-            code == 500 ||
-            code == 501 ||
-            code == 502 ||
-            code == 503 ||
-            code == 504 ||
-            code == 511 ||
-            code == 520 ||
-            code == 521 ||
-            code == 522 ||
-            code == 531 ){
-            
-            // set background to clear
-            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/rain.jpg)'
-        }
-        else if(
-            code == 200 ||
-            code == 201 ||
-            code == 202 ||
-            code == 210 ||
-            code == 211 ||
-            code == 212 ||
-            code == 221 ||
-            code == 230 ||
-            code == 231 ||
-            code == 232 ){
-            
-            // set background to clear
-            app.style.backgroundImage = 'url(../dist/img/'+timeOfTheDay+'/thunder.jpg)'
-        }
-    });
+    .then(result => weatherDetails(result))
 }
+
+function weatherDetails(data){
+    let cod;
+    if(data.cod == "404"){
+        alert("city does not exist!")
+    }else{
+        // get details from js object
+        const city = data.name;
+        const {feels_like, humidity, temp} = data.main; 
+        const wind = data.wind.speed;
+        const {description, icon, id} = data.weather[0];
+        const timezone = data.timezone;
+        const dt = data.dt;
+
+        // pass values to HTML element
+        document.querySelector('.condition').innerHTML = description.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());;
+        document.querySelector('.temp').innerHTML = Math.floor(temp) + "&#176;";
+        document.querySelector('.feels').innerHTML = feels_like + "&#176;";
+        document.querySelector('.humidity').innerHTML = humidity + '%';
+        document.querySelector('.city-name').innerHTML = city;
+        document.querySelector('.wind').innerHTML = wind + "km/hr";
+        document.querySelector('.time').innerHTML = getTime(timezone);
+        document.querySelector('.date').innerHTML = currentDate(timezone, dt);
+        
+        // get time of day from selected country
+       timeOfDay = isDay(timezone, dt)
+      // console.log(timeOfDay)
+       
+        //change background and icon by weather condition
+        
+        // clear
+        if (id == 800){
+
+            // set background to clear
+            
+            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/clear.jpg)`;
+
+            // set icon
+            document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/clear.svg">`
+
+            // set search button
+            if (timeOfDay == "night"){
+                btn.style.background = "#fff"
+                btn.style.color = "hsla(232, 100%, 74%, 1)"
+            }
+            
+        }
+        // thunderstorms
+        else if(id >= 200 && id <= 232){
+            
+            // set background to thunder
+            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/thunder.jpg)`;
+
+            // set icon
+            document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/thunderstorm.svg">`
+
+            // set search button
+            if (timeOfDay == "night"){
+                btn.style.background = "#fff"
+                btn.style.color = "hsla(232, 100%, 74%, 1)"
+            }
+        }
+        // snow
+        else if(id >= 600 && id <= 622){
+            
+            // set background to snow
+            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/snow.jpg)`;
+
+            // set icon
+            document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/snow.svg">`
+
+            // set search button
+            if (timeOfDay == "night"){
+                btn.style.background = "#fff"
+                btn.style.color = "hsla(232, 100%, 74%, 1)"
+            }
+        }
+        // fog
+        else if(id >= 701 && id <= 781){
+            
+            // set background to fog
+            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/fog.jpg)`;
+
+            // set icon
+            document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/fog.png">`
+
+            // set search button
+            if (timeOfDay == "night"){
+                btn.style.background = "#fff"
+                btn.style.color = "hsla(232, 100%, 74%, 1)"
+            }
+        }
+        // clouds
+        else if(id >= 801 && id <= 804){
+            
+            // set background to clouds
+            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/cloud.jpg)`;
+
+            // set icon
+            document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/cloud.svg">`
+
+            // set search button
+            if (timeOfDay == "night"){
+                btn.style.background = "#fff"
+                btn.style.color = "hsla(232, 100%, 74%, 1)"
+            }
+        }
+        // rain
+        else if((id >= 300 && id <= 321) || (id >= 500 && id <= 531)){
+            
+            // set background to rain
+            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/rain.jpg)`;
+
+            // set icon
+            document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/rain.svg">`
+
+            // set search button
+            if (timeOfDay == "night"){
+                btn.style.background = "#fff"
+                btn.style.color = "hsla(232, 100%, 74%, 1)"
+            }
+        }
+
+
+        // display on console
+        console.log(data);
+    }
+    app.style.opacity = "1"; 
+}
+
+fetchWeatherData();
