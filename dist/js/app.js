@@ -128,7 +128,7 @@ function weatherDetails(data){
 
             // set background to clear
             
-            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/clear.JPG)`;
+            app.style.backgroundImage = `url(dist/img/${timeOfDay}/clear.JPG)`;
 
             // set icon
             document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/clear.svg">`
@@ -144,7 +144,7 @@ function weatherDetails(data){
         else if(id >= 200 && id <= 232){
             
             // set background to thunder
-            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/thunder.JPG)`;
+            app.style.backgroundImage = `url(dist/img/${timeOfDay}/thunder.JPG)`;
 
             // set icon
             document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/thunderstorm.svg">`
@@ -159,7 +159,7 @@ function weatherDetails(data){
         else if(id >= 600 && id <= 622){
             
             // set background to snow
-            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/snow.JPG)`;
+            app.style.backgroundImage = `url(dist/img/${timeOfDay}/snow.JPG)`;
 
             // set icon
             document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/snow.svg">`
@@ -174,7 +174,7 @@ function weatherDetails(data){
         else if(id >= 701 && id <= 781){
             
             // set background to fog
-            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/fog.JPG)`;
+            app.style.backgroundImage = `url(dist/img/${timeOfDay}/fog.JPG)`;
 
             // set icon
             document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/fog.PNG">`
@@ -189,7 +189,7 @@ function weatherDetails(data){
         else if(id >= 801 && id <= 804){
             
             // set background to clouds
-            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/cloud.JPG)`;
+            app.style.backgroundImage = `url(dist/img/${timeOfDay}/cloud.JPG)`;
 
             // set icon
             document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/cloud.svg">`
@@ -204,7 +204,7 @@ function weatherDetails(data){
         else if((id >= 300 && id <= 321) || (id >= 500 && id <= 531)){
             
             // set background to rain
-            app.style.backgroundImage = `url(../dist/img/${timeOfDay}/rain.JPG)`;
+            app.style.backgroundImage = `url(dist/img/${timeOfDay}/rain.JPG)`;
 
             // set icon
             document.querySelector('.icon').innerHTML = `<img src="dist/img/icon/rain.svg">`
